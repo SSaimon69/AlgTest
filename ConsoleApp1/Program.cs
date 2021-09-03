@@ -6,8 +6,9 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.Write(64 / 5);
-            //Console.WriteLine(RecMax(new int[5] { 4, 2, 42, 8, 5 }));
+            int[] test = QuickSort(new int[5] { 4, 2, 42, 8, 5 });
+            foreach (int i in test)
+                Console.Write(i + " ");
             
             //int [] a = SelectSort(new int[9] { 14, 8, 3, -6, -7, 2, 3, 4, 4 });
             //int[] mas = new int[100];
@@ -31,6 +32,7 @@ namespace ConsoleApp1
 
         }
 
+        //Бинарный поиск
         static int BinSearch(int [] mas, int item)
         {
             int low = 0, 
@@ -47,6 +49,7 @@ namespace ConsoleApp1
             return -1;
         }
 
+        //Простой поиск перебором
         static int SimpleSearch(int[] mas, int item)
         {
             for (int i = 0; i < mas.Length; i++)
@@ -56,7 +59,7 @@ namespace ConsoleApp1
             return -1;
         }
 
-       
+       //Сортировка выбором
         static int[] SelectSort (int [] mas)
         {
             int[] sortMas = new int[mas.Length];
@@ -81,6 +84,48 @@ namespace ConsoleApp1
             return sortMas;
         }
 
+        //Быстрая сортировка
+        static int[] QuickSort(int [] mas)
+        {
+            if (mas.Length < 2) return mas;
+            else
+            {
+                int opora = mas[0];
+                int[] leftMas = getLeftMas(mas, opora);
+                int[] rightMas = getRightMas(mas, opora);
+                return sumMas(sumMas(leftMas, new int[1] { opora }), rightMas);
+            }
+        }
+
+        static int[] sumMas(int[] mas1, int[] mas2)
+        {
+            int[] masRet = new int[mas1.Length + mas2.Length];
+            for(int i = 0;i<mas1.Length;i++) masRet[i] = mas1[i];
+            for (int i = 0; i < mas2.Length; i++) masRet[i + mas1.Length-1] = mas2[i];
+            return masRet;
+        }
+
+        static int[] getLeftMas(int[] mas, int opora)
+        {
+            int count = 0;
+            foreach (int i in mas) if (i < opora) count++;
+            int[] leftMas = new int[count];
+            count = 0;
+            foreach (int i in mas) if (i < opora) leftMas[count++] = i;
+            return leftMas;
+        }
+
+        static int[] getRightMas(int[] mas, int opora)
+        {
+            int count = 0;
+            foreach (int i in mas) if (i > opora) count++;
+            int[] rightMas = new int[count];
+            count = 0;
+            foreach (int i in mas) if (i > opora) rightMas[count++] = i;
+            return rightMas;
+        }
+
+        //Удаление элемента из массива
         static int[] DeleteArrElem(int [] mas, int index)
         {
             int[] newMas = new int[mas.Length - 1];
@@ -95,12 +140,14 @@ namespace ConsoleApp1
             return newMas;
         }
 
+        //Рекурсивное суммирование массива
         static int RecSum(int [] mas)
         {
             if (mas.Length == 0) return 0;
             else return mas[0] + RecSum(DeleteArrElem(mas, 0));
         }
 
+        //Рекурсивный поиск максимума в массиве
         static int RecMax(int[] mas)
         {
             if (mas.Length == 0) return 0;
