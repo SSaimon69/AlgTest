@@ -93,7 +93,7 @@ namespace ConsoleApp1
                 int opora = mas[0];
                 int[] leftMas = getLeftMas(mas, opora);
                 int[] rightMas = getRightMas(mas, opora);
-                return sumMas(sumMas(leftMas, new int[1] { opora }), rightMas);
+                return sumMas(sumMas(QuickSort(leftMas), new int[1] { opora }), QuickSort(rightMas));
             }
         }
 
@@ -101,7 +101,7 @@ namespace ConsoleApp1
         {
             int[] masRet = new int[mas1.Length + mas2.Length];
             for(int i = 0;i<mas1.Length;i++) masRet[i] = mas1[i];
-            for (int i = 0; i < mas2.Length; i++) masRet[i + mas1.Length-1] = mas2[i];
+            for (int i = 0; i < mas2.Length; i++) masRet[i + mas1.Length] = mas2[i];
             return masRet;
         }
 
